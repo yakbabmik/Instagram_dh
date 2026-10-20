@@ -84,6 +84,82 @@
       .modal-card{grid-template-columns:1fr;max-width:420px;max-height:90vh;overflow:auto}
       .modal-image{min-height:0;aspect-ratio:1/1}.modal-image img{max-height:none}
       .modal-caption{padding:13px}.modal-bottom{padding:12px}
+      /* 익명 댓글 영역 */
+.comments-area {
+  border-top: 1px solid #eee;
+  padding: 12px 14px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.comments-title {
+  font-size: 13px;
+  font-weight: 650;
+  margin-bottom: 12px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.comment-row {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.comment-name {
+  font-weight: 650;
+  margin-right: 7px;
+}
+
+.comment-date {
+  display: block;
+  color: #999;
+  font-size: 11px;
+}
+
+.comment-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.comment-input {
+  flex: 1;
+  min-width: 0;
+  resize: vertical;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  padding: 10px 13px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.comment-submit {
+  border: none;
+  background: white;
+  color: #0095f6;
+  font-weight: 700;
+  padding: 10px 4px;
+  cursor: pointer;
+}
+
+.comment-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.comment-status {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.5;
+}
     }
   </style>
 </head>
@@ -136,13 +212,41 @@
       <div class="modal-image"><img id="modalImg" src="" alt="게시물 이미지"></div>
       <div class="modal-side">
         <div class="modal-head"><div class="tiny-avatar"><span>dh.</span></div><span>dohun.zip</span><span style="margin-left:auto">•••</span></div>
-        <div class="modal-caption" id="modalCaption"></div>
-        <section class="comments-area" aria-label="댓글">
-          <div class="comments-title">댓글</div>
-          <p class="comments-help">댓글은 공개 저장됩니다. 작성하려면 GitHub 계정 로그인이 필요할 수 있어요.</p>
-          <div id="giscusContainer"><p class="comments-help">댓글 기능을 활성화하려면 README의 Giscus 설정을 먼저 완료해 주세요.</p></div>
-        </section>
-        <div class="modal-bottom" id="modalLikes"></div>
+       <div class="modal-caption" id="modalCaption"></div>
+
+<section class="comments-area">
+  <div class="comments-title" id="commentsTitle">
+    댓글
+  </div>
+
+  <div class="comments-list" id="commentsList">
+    <p class="comment-status">댓글을 불러오는 중...</p>
+  </div>
+
+  <form class="comment-form" id="commentForm">
+    <textarea
+      class="comment-input"
+      id="commentInput"
+      maxlength="500"
+      rows="1"
+      placeholder="익명으로 댓글 달기..."
+      aria-label="댓글 입력"
+      required
+    ></textarea>
+
+    <button
+      class="comment-submit"
+      id="commentSubmit"
+      type="submit"
+    >게시</button>
+  </form>
+
+  <p class="comment-status" id="commentStatus">
+    로그인 없이 작성 가능 · 댓글은 공개됩니다.
+  </p>
+</section>
+
+<div class="modal-bottom" id="modalLikes"></div>
       </div>
     </div>
   </div>
