@@ -70,6 +70,103 @@
     .menu-pop.show{display:block}
     .menu-pop button{display:block;width:100%;padding:12px 15px;border:0;background:white;text-align:left;font-size:13px}
     .menu-pop button:hover{background:#f7f7f7}
+    
+.comments-panel {
+  padding: 12px 15px 16px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+}
+
+.comments-title {
+  font-size: 14px;
+  font-weight: 650;
+  margin-bottom: 10px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.comment-item {
+  display: flex;
+  gap: 7px;
+}
+
+.comment-name {
+  font-weight: 650;
+  flex-shrink: 0;
+}
+
+.comment-text {
+  white-space: pre-wrap;
+}
+
+.comment-empty {
+  color: #999;
+  padding: 8px 0;
+}
+
+.comment-form {
+  margin-top: 14px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+}
+
+.comment-form input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 0;
+  background: transparent;
+}
+
+.comment-write-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-write-row button {
+  border: 0;
+  background: transparent;
+  color: #0095f6;
+  font-weight: 650;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.comment-write-row button:disabled {
+  opacity: .45;
+}
+
+.comment-status {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #777;
+}
+
+@media(max-width:650px) {
+  .comments-panel {
+    min-height: 170px;
+  }
+
+  .comments-list {
+    max-height: 180px;
+  }
+}
+
     @media(max-width:650px){
       .app{padding:14px 0 40px}.topbar{padding:0 16px;margin-bottom:20px}
       .profile{grid-template-columns:100px 1fr;gap:16px;padding:0 16px;margin-bottom:22px;align-items:start}
@@ -246,7 +343,38 @@
   </p>
 </section>
 
+
 <div class="modal-bottom" id="modalLikes"></div>
+
+<div class="comments-panel">
+  <div class="comments-title">댓글</div>
+  <div id="commentsList" class="comments-list">
+    댓글을 불러오는 중...
+  </div>
+
+  <form id="commentForm" class="comment-form">
+    <input
+      id="commentName"
+      type="text"
+      maxlength="30"
+      placeholder="닉네임 (비워두면 익명)"
+      aria-label="닉네임"
+    >
+    <div class="comment-write-row">
+      <input
+        id="commentBody"
+        type="text"
+        maxlength="500"
+        placeholder="댓글 달기..."
+        aria-label="댓글 내용"
+        required
+      >
+      <button id="commentSubmit" type="submit">게시</button>
+    </div>
+    <p id="commentStatus" class="comment-status" aria-live="polite"></p>
+  </form>
+</div>
+
       </div>
     </div>
   </div>
@@ -279,7 +407,160 @@ posts.forEach((p,i)=>{
   b.addEventListener('click',()=>openPost(i)); grid.appendChild(b);
 });
 const modal=document.getElementById('postModal');
-function openPost(i){const p=posts[i];document.getElementById('modalImg').src=p.img;document.getElementById('modalCaption').innerHTML=`<strong>dohun.zip</strong> ${p.caption}<br><br><span style="color:#888">#일상 #커플 #우리의기록</span>`;document.getElementById('modalLikes').textContent=p.likes+' · 댓글 보기';loadComments(i);modal.classList.add('open');document.body.style.overflow='hidden';}
+
+/* ① Supabase 연결 정보: 이 두 값을 네 프로젝트 정보로 교체 */
+const SUPABASE_URL = 'https://jukqqeripicztlkadwew.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Ppmfo2If2wWIb6BAt25E-A_FZUoxnNi';
+
+let currentPostId = 0;
+
+const commentsList = document.getElementById('commentsList');
+const commentForm = document.getElementById('commentForm');
+const commentName = document.getElementById('commentName');
+const commentBody = document.getElementById('commentBody');
+const commentSubmit = document.getElementById('commentSubmit');
+const commentStatus = document.getElementById('commentStatus');
+
+function supabaseHeaders() {
+  return {
+    apikey: SUPABASE_KEY,
+    Authorization: `Bearer ${SUPABASE_KEY}`
+  };
+}
+
+/* ② 선택한 게시물의 댓글을 불러오기 */
+async function loadComments(postId) {
+  commentsList.textContent = '댓글을 불러오는 중...';
+
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/comments` +
+      `?post_id=eq.${postId}` +
+      '&select=id,display_name,body,created_at' +
+      '&order=created_at.asc';
+
+    const response = await fetch(url, {
+      headers: supabaseHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    const comments = await response.json();
+    commentsList.replaceChildren();
+
+    if (comments.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'comment-empty';
+      empty.textContent = '첫 댓글을 남겨 보세요 🤍';
+      commentsList.appendChild(empty);
+      return;
+    }
+
+    comments.forEach(comment => {
+      const item = document.createElement('div');
+      item.className = 'comment-item';
+
+      const name = document.createElement('span');
+      name.className = 'comment-name';
+      name.textContent = comment.display_name || '익명';
+
+      const body = document.createElement('span');
+      body.className = 'comment-text';
+      body.textContent = comment.body;
+
+      item.append(name, body);
+      commentsList.appendChild(item);
+    });
+  } catch (error) {
+    console.error('댓글 조회 오류:', error);
+    commentsList.textContent =
+      '댓글을 불러오지 못했어요. Supabase 연결 설정을 확인해 주세요.';
+  }
+}
+
+/* ③ 익명 댓글 저장하기 */
+commentForm.addEventListener('submit', async event => {
+  event.preventDefault();
+
+  const displayName = commentName.value.trim() || '익명';
+  const body = commentBody.value.trim();
+
+  if (!body) {
+    commentStatus.textContent = '댓글 내용을 입력해 줘.';
+    return;
+  }
+
+  if (body.length > 500 || displayName.length > 30) {
+    commentStatus.textContent = '닉네임은 30자, 댓글은 500자까지 가능해.';
+    return;
+  }
+
+  commentSubmit.disabled = true;
+  commentStatus.textContent = '댓글을 등록하는 중...';
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/comments`,
+      {
+        method: 'POST',
+        headers: {
+          ...supabaseHeaders(),
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify({
+          post_id: currentPostId,
+          display_name: displayName,
+          body: body
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    commentBody.value = '';
+    commentStatus.textContent = '댓글이 등록됐어!';
+    await loadComments(currentPostId);
+  } catch (error) {
+    console.error('댓글 등록 오류:', error);
+    commentStatus.textContent =
+      '등록에 실패했어. Supabase 설정을 확인해 줘.';
+  } finally {
+    commentSubmit.disabled = false;
+  }
+});
+
+/* ④ 게시물을 열 때 해당 게시물의 댓글 표시 */
+function openPost(i) {
+  const p = posts[i];
+  currentPostId = i;
+
+  document.getElementById('modalImg').src = p.img;
+
+  const caption = document.getElementById('modalCaption');
+  caption.replaceChildren();
+
+  const username = document.createElement('strong');
+  username.textContent = 'dohun.zip';
+
+  const captionText = document.createTextNode(' ' + p.caption);
+  caption.append(username, captionText);
+
+  document.getElementById('modalLikes').textContent = p.likes;
+
+  commentName.value = '';
+  commentBody.value = '';
+  commentStatus.textContent = '';
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  loadComments(i);
+}
+
 function loadComments(postIndex){
   const container = document.getElementById('giscusContainer');
   container.innerHTML = '';
