@@ -429,7 +429,7 @@ function supabaseHeaders() {
 }
 
 /* ② 선택한 게시물의 댓글을 불러오기 */
-async function loadComments(postId) {
+const commentsList = document.getElementById('commentsList');
   commentsList.textContent = '댓글을 불러오는 중...';
 
   try {
