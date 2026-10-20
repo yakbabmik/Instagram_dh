@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>김도훈 (@doooohun.) · Instagram</title>
+  <style>
+    :root{--ink:#171717;--muted:#737373;--line:#dbdbdb;--soft:#f7f7f7;--accent:#ff5277}
+    *{box-sizing:border-box}
+    body{margin:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif}
+    button{font:inherit;cursor:pointer}
+    .app{max-width:975px;margin:0 auto;padding:26px 28px 56px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+    .back,.more{border:0;background:transparent;padding:5px;color:#222;display:grid;place-items:center}
+    .top-actions{display:flex;align-items:center;gap:20px}
+    .profile{display:grid;grid-template-columns: minmax(120px, 1fr) 2fr;gap:34px;align-items:center;margin-bottom:36px}
+    .avatar-wrap{display:flex;justify-content:center}
+    .avatar{width:150px;height:150px;border-radius:50%;padding:4px;background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7);display:grid;place-items:center}
+    .avatar-inner{width:100%;height:100%;border-radius:50%;border:4px solid white;background:linear-gradient(145deg,#24202d,#100e16 62%,#523348);display:grid;place-items:center;color:#fff;font-family:Georgia,serif;font-size:43px;letter-spacing:-4px}
+    .heading{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+    .username{font-size:23px;font-weight:400;letter-spacing:.1px}
+    .verified{width:17px;height:17px;border-radius:50%;background:#3897f0;color:#fff;display:inline-grid;place-items:center;font-size:11px;font-weight:800}
+    .stats{display:flex;gap:38px;margin-bottom:20px}
+    .stat{font-size:16px}.stat strong{font-weight:650}
+    .bio{font-size:14px;line-height:1.7}
+    .display-name{font-weight:650}
+    .muted{color:var(--muted)}
+    .bio .linkish{color:#385898}
+    .actions{display:grid;grid-template-columns:1fr 1fr 54px;gap:10px;margin-bottom:26px}
+    .action{border:1px solid var(--line);border-radius:7px;background:#fff;min-height:42px;font-weight:600;color:#262626}
+    .action.following{background:#f5f5f5}
+    .action:hover{background:#f7f7f7}
+    .tabs{display:flex;justify-content:center;gap:76px;border-bottom:1px solid var(--line);margin-bottom:4px}
+    .tab{position:relative;border:0;background:transparent;color:#8e8e8e;padding:15px 0 13px;min-width:36px}
+    .tab.active{color:#262626}
+    .tab.active:after{content:"";height:1px;background:#262626;position:absolute;bottom:-1px;left:-16px;right:-16px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+    .post{position:relative;aspect-ratio:1/1;border:0;padding:0;overflow:hidden;background:#eee}
+    .post img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+    .post:hover img{transform:scale(1.045)}
+    .post:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.23));opacity:.55;pointer-events:none}
+    .post .heart{position:absolute;z-index:1;right:12px;top:12px;color:white;font-size:20px;text-shadow:0 1px 5px #333;opacity:0;transition:opacity .2s}
+    .post:hover .heart{opacity:1}
+    .post .multi{position:absolute;z-index:1;right:12px;top:12px;color:white;font-size:20px}
+    .post .caption{position:absolute;z-index:1;left:13px;right:10px;bottom:12px;color:#fff;font-size:13px;text-align:left;text-shadow:0 1px 4px #333;opacity:0;transition:opacity .2s}
+    .post:hover .caption{opacity:1}
+    .footer{text-align:center;color:#aaa;font-size:11px;margin-top:34px}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+    .modal.open{display:flex}
+    .modal-card{width:min(860px,100%);max-height:90vh;background:#fff;display:grid;grid-template-columns:1.1fr .9fr;border-radius:4px;overflow:hidden}
+    .modal-image{background:#eee;min-height:360px;display:grid;place-items:center}
+    .modal-image img{width:100%;height:100%;max-height:80vh;object-fit:cover}
+    .modal-side{display:flex;flex-direction:column;min-width:0}
+    .modal-head{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #eee;font-size:13px;font-weight:650}
+    .tiny-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7);padding:2px;flex-shrink:0}
+    .tiny-avatar span{display:grid;place-items:center;background:#211923;color:white;border-radius:50%;height:100%;font:12px Georgia,serif}
+    .modal-caption{padding:18px 15px;font-size:14px;line-height:1.7;flex:1}
+    .modal-bottom{padding:14px 15px;border-top:1px solid #eee;font-size:13px;color:#555}
+    .comments-area{border-top:1px solid #eee;padding:10px 14px;max-height:38vh;overflow:auto}
+    .comments-title{font-size:13px;font-weight:650;margin:2px 0 8px}
+    .comments-help{font-size:12px;color:#777;line-height:1.5;margin:0 0 8px}
+    .giscus{min-height:100px}
+
+    .close{position:fixed;top:18px;right:22px;color:white;background:transparent;border:0;font-size:34px;font-weight:200}
+    .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;background:#262626;color:#fff;padding:11px 16px;border-radius:8px;font-size:13px;transition:.25s;pointer-events:none;z-index:20}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .menu{position:relative}
+    .menu-pop{display:none;position:absolute;right:0;top:36px;background:#fff;border:1px solid #eee;border-radius:8px;box-shadow:0 8px 30px #0001;min-width:170px;z-index:5;overflow:hidden}
+    .menu-pop.show{display:block}
+    .menu-pop button{display:block;width:100%;padding:12px 15px;border:0;background:white;text-align:left;font-size:13px}
+    .menu-pop button:hover{background:#f7f7f7}
+    @media(max-width:650px){
+      .app{padding:14px 0 40px}.topbar{padding:0 16px;margin-bottom:20px}
+      .profile{grid-template-columns:100px 1fr;gap:16px;padding:0 16px;margin-bottom:22px;align-items:start}
+      .avatar{width:86px;height:86px;padding:3px}.avatar-inner{font-size:27px;border-width:3px}
+      .heading{gap:7px;margin-bottom:15px}.username{font-size:19px}
+      .stats{gap:0;justify-content:space-between;margin-bottom:14px}.stat{font-size:12px;text-align:center}.stat strong{display:block;font-size:15px}
+      .bio{font-size:12px;line-height:1.55}
+      .actions{padding:0 12px;grid-template-columns:1fr 1fr 42px;gap:6px;margin-bottom:18px}
+      .action{min-height:36px;font-size:13px}
+      .tabs{gap:74px}.tab{padding:12px 0 10px}
+      .grid{gap:2px}.post .caption{display:none}
+      .modal-card{grid-template-columns:1fr;max-width:420px;max-height:90vh;overflow:auto}
+      .modal-image{min-height:0;aspect-ratio:1/1}.modal-image img{max-height:none}
+      .modal-caption{padding:13px}.modal-bottom{padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="back" aria-label="뒤로" id="backBtn"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3 6 12l9 9"/></svg></button>
+      <div class="top-actions">
+        <button class="more" aria-label="알림" id="bellBtn"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4M12 3V1"/></svg></button>
+        <div class="menu">
+          <button class="more" aria-label="더 보기" id="moreBtn"><svg width="28" height="18" viewBox="0 0 28 18" fill="currentColor"><circle cx="4" cy="9" r="1.8"/><circle cx="14" cy="9" r="1.8"/><circle cx="24" cy="9" r="1.8"/></svg></button>
+          <div class="menu-pop" id="menuPop"><button data-toast="가상 프로필 링크가 복사된 것처럼 표시됩니다">프로필 링크 복사</button><button data-toast="이 프로필은 데모용 가상 계정입니다">이 프로필 정보</button></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="profile">
+      <div class="avatar-wrap"><div class="avatar" aria-label="프로필 이미지"><div class="avatar-inner">dh.</div></div></div>
+      <div class="profile-info">
+        <div class="heading"><span class="username">dohun.zip</span><span class="verified" title="데모 장식 아이콘">✓</span></div>
+        <div class="stats">
+          <div class="stat"><strong>9</strong> 게시물</div>
+          <div class="stat"><strong>3,482</strong> 팔로워</div>
+          <div class="stat"><strong>5</strong> 팔로잉</div>
+        </div>
+        <div class="bio">
+          <div class="display-name">김도훈</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="actions" aria-label="프로필 작업">
+      <button class="action following" id="followBtn">팔로잉⌄</button>
+      <button class="action" id="messageBtn">메시지</button>
+      <button class="action" id="friendBtn" aria-label="비슷한 계정"><svg width="15" height="10" viewBox="0 0 15 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 2 5.5 5L13 2"/></svg></button>
+    </section>
+
+    <nav class="tabs" aria-label="프로필 탭">
+      <button class="tab active" id="postsTab" aria-label="게시물"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20"/><path d="M2 9h20M2 15h20M9 2v20M15 2v20"/></svg></button>
+      <button class="tab" id="taggedTab" aria-label="태그된 게시물"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="9" r="3.2"/><path d="M5 20c.8-3.6 3.1-5.4 7-5.4s6.2 1.8 7 5.4"/></svg></button>
+    </nav>
+
+    <section class="grid" id="postGrid" aria-label="게시물 9개"></section>
+    <div class="footer">이 페이지는 포트폴리오·팬메이드용 가상 프로필입니다. Instagram과 제휴하지 않습니다.</div>
+  </main>
+
+  <div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="게시물 상세">
+    <button class="close" id="closeModal" aria-label="닫기">×</button>
+    <div class="modal-card">
+      <div class="modal-image"><img id="modalImg" src="" alt="게시물 이미지"></div>
+      <div class="modal-side">
+        <div class="modal-head"><div class="tiny-avatar"><span>dh.</span></div><span>dohun.zip</span><span style="margin-left:auto">•••</span></div>
+        <div class="modal-caption" id="modalCaption"></div>
+        <section class="comments-area" aria-label="댓글">
+          <div class="comments-title">댓글</div>
+          <p class="comments-help">댓글은 공개 저장됩니다. 작성하려면 GitHub 계정 로그인이 필요할 수 있어요.</p>
+          <div id="giscusContainer"><p class="comments-help">댓글 기능을 활성화하려면 README의 Giscus 설정을 먼저 완료해 주세요.</p></div>
+        </section>
+        <div class="modal-bottom" id="modalLikes"></div>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+<script>
+const posts = [
+  {img:"https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85",caption:"별거 아닌 하루도 너랑 있으면 기억하고 싶어 🤍",likes:"좋아요 284개",tag:"데이트"},
+  {img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",caption:"우리 단골 될 것 같은 곳. 다음엔 네가 커피 사기 ☕",likes:"좋아요 196개",tag:"카페"},
+  {img:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85",caption:"집 가기 아쉬워서 한 정거장 더 걷기",likes:"좋아요 331개",tag:"산책"},
+  {img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"사진 찍는 건 어색한데 너랑은 자꾸 남기게 돼 📸",likes:"좋아요 402개",tag:"커플"},
+  {img:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85",caption:"정환이 형이 골라준 노을 색",likes:"좋아요 257개",tag:"노을"},
+  {img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85",caption:"아무 계획 없이 떠난 주말, 이런 게 좋다",likes:"좋아요 178개",tag:"여행"},
+  {img:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=85",caption:"너는 내 사진첩에 너무 많아",likes:"좋아요 516개",tag:"일상"},
+  {img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85",caption:"우리만 아는 작은 여행 🌿",likes:"좋아요 223개",tag:"여행"},
+  {img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"오래오래 지금처럼. 🖤",likes:"좋아요 648개",tag:"럽스타그램"}
+];
+const grid = document.getElementById('postGrid');
+posts.forEach((p,i)=>{
+  const b=document.createElement('button'); b.className='post'; b.setAttribute('aria-label',`게시물 ${i+1}: ${p.caption}`);
+  b.innerHTML=`<img src="${p.img}" alt="${p.tag} 사진" loading="${i>2?'lazy':'eager'}"><span class="heart">♥</span><span class="caption">${p.caption}</span>`;
+  b.addEventListener('click',()=>openPost(i)); grid.appendChild(b);
+});
+const modal=document.getElementById('postModal');
+function openPost(i){const p=posts[i];document.getElementById('modalImg').src=p.img;document.getElementById('modalCaption').innerHTML=`<strong>dohun.zip</strong> ${p.caption}<br><br><span style="color:#888">#일상 #커플 #우리의기록</span>`;document.getElementById('modalLikes').textContent=p.likes+' · 댓글 보기';loadComments(i);modal.classList.add('open');document.body.style.overflow='hidden';}
+function loadComments(postIndex){
+  const container = document.getElementById('giscusContainer');
+  container.innerHTML = '';
+  // Replace these placeholders after configuring Giscus. See README.md.
+  const repo = 'YOUR_GITHUB_USERNAME/YOUR_REPOSITORY';
+  const repoId = 'YOUR_GISCUS_REPO_ID';
+  const category = 'Comments';
+  const categoryId = 'YOUR_GISCUS_CATEGORY_ID';
+  if (repo.includes('YOUR_') || repoId.includes('YOUR_') || categoryId.includes('YOUR_')) {
+    container.innerHTML = '<p class="comments-help">댓글 설정 전이에요. 저장소의 README.md에서 설정 방법을 확인해 주세요.</p>';
+    return;
+  }
+  const s = document.createElement('script');
+  s.src = 'https://giscus.app/client.js';
+  s.async = true;
+  s.crossOrigin = 'anonymous';
+  s.setAttribute('data-repo', repo);
+  s.setAttribute('data-repo-id', repoId);
+  s.setAttribute('data-category', category);
+  s.setAttribute('data-category-id', categoryId);
+  s.setAttribute('data-mapping', 'specific');
+  s.setAttribute('data-term', 'dohun-profile-post-' + (postIndex + 1));
+  s.setAttribute('data-strict', '1');
+  s.setAttribute('data-reactions-enabled', '1');
+  s.setAttribute('data-emit-metadata', '0');
+  s.setAttribute('data-input-position', 'top');
+  s.setAttribute('data-theme', 'light');
+  s.setAttribute('data-lang', 'ko');
+  container.appendChild(s);
+}
+function closePost(){modal.classList.remove('open');document.body.style.overflow='';}
+document.getElementById('closeModal').addEventListener('click',closePost);
+modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePost()});
+const toast=document.getElementById('toast');let toastTimer;
+function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300);}
+document.getElementById('followBtn').addEventListener('click',()=>{const b=document.getElementById('followBtn');const following=b.classList.toggle('following');b.textContent=following?'팔로잉⌄':'팔로우';showToast(following?'팔로잉 중입니다':'팔로우를 시작했습니다')});
+document.getElementById('messageBtn').addEventListener('click',()=>showToast('가상 프로필에서는 메시지를 보낼 수 없습니다.'));
+document.getElementById('friendBtn').addEventListener('click',()=>showToast('추천 계정 기능은 데모용입니다.'));
+document.getElementById('bellBtn').addEventListener('click',()=>showToast('게시물 알림이 켜진 것처럼 표시됩니다.'));
+document.getElementById('backBtn').addEventListener('click',()=>showToast('데모 프로필 화면입니다.'));
+document.getElementById('moreBtn').addEventListener('click',()=>document.getElementById('menuPop').classList.toggle('show'));
+document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>{showToast(b.dataset.toast);document.getElementById('menuPop').classList.remove('show')}));
+document.getElementById('postsTab').addEventListener('click',()=>{document.getElementById('postsTab').classList.add('active');document.getElementById('taggedTab').classList.remove('active');grid.style.display='grid'});
+document.getElementById('taggedTab').addEventListener('click',()=>{document.getElementById('taggedTab').classList.add('active');document.getElementById('postsTab').classList.remove('active');grid.style.display='none';showToast('태그된 게시물이 없습니다.')});
+</script>
+</body>
+</html>
