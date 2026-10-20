@@ -1,394 +1,228 @@
+
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <title>김도훈 (@doooohun.) · Instagram</title>
-  <style>
-    :root{--ink:#171717;--muted:#737373;--line:#dbdbdb;--soft:#f7f7f7;--accent:#ff5277}
-    *{box-sizing:border-box}
-    body{margin:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif}
-    button{font:inherit;cursor:pointer}
-    .app{max-width:975px;margin:0 auto;padding:26px 28px 56px}
-    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
-    .back,.more{border:0;background:transparent;padding:5px;color:#222;display:grid;place-items:center}
-    .top-actions{display:flex;align-items:center;gap:20px}
-    .profile{display:grid;grid-template-columns: minmax(120px, 1fr) 2fr;gap:34px;align-items:center;margin-bottom:36px}
-    .avatar-wrap{display:flex;justify-content:center}
-    .avatar{width:150px;height:150px;border-radius:50%;padding:4px;background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7);display:grid;place-items:center}
-    .avatar-inner{width:100%;height:100%;border-radius:50%;border:4px solid white;background:linear-gradient(145deg,#24202d,#100e16 62%,#523348);display:grid;place-items:center;color:#fff;font-family:Georgia,serif;font-size:43px;letter-spacing:-4px}
-    .heading{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
-    .username{font-size:23px;font-weight:400;letter-spacing:.1px}
-    .verified{width:17px;height:17px;border-radius:50%;background:#3897f0;color:#fff;display:inline-grid;place-items:center;font-size:11px;font-weight:800}
-    .stats{display:flex;gap:38px;margin-bottom:20px}
-    .stat{font-size:16px}.stat strong{font-weight:650}
-    .bio{font-size:14px;line-height:1.7}
-    .display-name{font-weight:650}
-    .muted{color:var(--muted)}
-    .bio .linkish{color:#385898}
-    .actions{display:grid;grid-template-columns:1fr 1fr 54px;gap:10px;margin-bottom:26px}
-    .action{border:1px solid var(--line);border-radius:7px;background:#fff;min-height:42px;font-weight:600;color:#262626}
-    .action.following{background:#f5f5f5}
-    .action:hover{background:#f7f7f7}
-    .tabs{display:flex;justify-content:center;gap:76px;border-bottom:1px solid var(--line);margin-bottom:4px}
-    .tab{position:relative;border:0;background:transparent;color:#8e8e8e;padding:15px 0 13px;min-width:36px}
-    .tab.active{color:#262626}
-    .tab.active:after{content:"";height:1px;background:#262626;position:absolute;bottom:-1px;left:-16px;right:-16px}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
-    .post{position:relative;aspect-ratio:1/1;border:0;padding:0;overflow:hidden;background:#eee}
-    .post img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
-    .post:hover img{transform:scale(1.045)}
-    .post:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.23));opacity:.55;pointer-events:none}
-    .post .heart{position:absolute;z-index:1;right:12px;top:12px;color:white;font-size:20px;text-shadow:0 1px 5px #333;opacity:0;transition:opacity .2s}
-    .post:hover .heart{opacity:1}
-    .post .multi{position:absolute;z-index:1;right:12px;top:12px;color:white;font-size:20px}
-    .post .caption{position:absolute;z-index:1;left:13px;right:10px;bottom:12px;color:#fff;font-size:13px;text-align:left;text-shadow:0 1px 4px #333;opacity:0;transition:opacity .2s}
-    .post:hover .caption{opacity:1}
-    .footer{text-align:center;color:#aaa;font-size:11px;margin-top:34px}
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
-    .modal.open{display:flex}
-    .modal-card{width:min(860px,100%);max-height:90vh;background:#fff;display:grid;grid-template-columns:1.1fr .9fr;border-radius:4px;overflow:hidden}
-    .modal-image{background:#eee;min-height:360px;display:grid;place-items:center}
-    .modal-image img{width:100%;height:100%;max-height:80vh;object-fit:cover}
-    .modal-side{display:flex;flex-direction:column;min-width:0}
-    .modal-head{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #eee;font-size:13px;font-weight:650}
-    .tiny-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7);padding:2px;flex-shrink:0}
-    .tiny-avatar span{display:grid;place-items:center;background:#211923;color:white;border-radius:50%;height:100%;font:12px Georgia,serif}
-    .modal-caption{padding:18px 15px;font-size:14px;line-height:1.7;flex:1}
-    .modal-bottom{padding:14px 15px;border-top:1px solid #eee;font-size:13px;color:#555}
-    .comments-area{border-top:1px solid #eee;padding:10px 14px;max-height:38vh;overflow:auto}
-    .comments-title{font-size:13px;font-weight:650;margin:2px 0 8px}
-    .comments-help{font-size:12px;color:#777;line-height:1.5;margin:0 0 8px}
-    .giscus{min-height:100px}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>김도훈 (@dohun.zip) · Instagram</title>
 
-    .close{position:fixed;top:18px;right:22px;color:white;background:transparent;border:0;font-size:34px;font-weight:200}
-    .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;background:#262626;color:#fff;padding:11px 16px;border-radius:8px;font-size:13px;transition:.25s;pointer-events:none;z-index:20}
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-    .menu{position:relative}
-    .menu-pop{display:none;position:absolute;right:0;top:36px;background:#fff;border:1px solid #eee;border-radius:8px;box-shadow:0 8px 30px #0001;min-width:170px;z-index:5;overflow:hidden}
-    .menu-pop.show{display:block}
-    .menu-pop button{display:block;width:100%;padding:12px 15px;border:0;background:white;text-align:left;font-size:13px}
-    .menu-pop button:hover{background:#f7f7f7}
-    
-.comments-panel {
-  padding: 12px 15px 16px;
-  border-top: 1px solid #eee;
-  display: flex;
-  flex-direction: column;
-  min-height: 190px;
+<style>
+:root {
+  --ink:#171717;
+  --muted:#737373;
+  --line:#dbdbdb;
+  --blue:#0095f6;
 }
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:#fff;
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif;
+}
+button,input { font:inherit; }
+button { cursor:pointer; }
+.app { max-width:975px; margin:auto; padding:26px 28px 56px; }
+.topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:34px; }
+.back,.more { border:0; background:transparent; padding:5px; color:#222; }
+.top-actions { display:flex; align-items:center; gap:20px; }
+.menu { position:relative; }
+.menu-pop {
+  display:none; position:absolute; right:0; top:36px; z-index:5;
+  min-width:170px; background:white; border:1px solid #eee;
+  border-radius:8px; box-shadow:0 8px 30px #0001; overflow:hidden;
+}
+.menu-pop.show { display:block; }
+.menu-pop button { display:block; width:100%; padding:12px 15px; border:0; background:white; text-align:left; font-size:13px; }
+.profile { display:grid; grid-template-columns:minmax(120px,1fr) 2fr; gap:34px; align-items:center; margin-bottom:36px; }
+.avatar-wrap { display:flex; justify-content:center; }
+.avatar {
+  width:150px; height:150px; border-radius:50%; padding:4px;
+  background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7);
+  display:grid; place-items:center;
+}
+.avatar-inner {
+  width:100%; height:100%; border-radius:50%; border:4px solid white;
+  background:linear-gradient(145deg,#24202d,#100e16 62%,#523348);
+  display:grid; place-items:center; color:white; font-family:Georgia,serif;
+  font-size:43px; letter-spacing:-4px;
+}
+.heading { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+.username { font-size:23px; font-weight:400; }
+.verified { width:17px; height:17px; border-radius:50%; background:#3897f0; color:white; display:inline-grid; place-items:center; font-size:11px; font-weight:800; }
+.stats { display:flex; gap:38px; margin-bottom:20px; }
+.stat { font-size:16px; }
+.stat strong { font-weight:650; }
+.bio { font-size:14px; line-height:1.7; }
+.display-name { font-weight:650; }
+.actions { display:grid; grid-template-columns:1fr 1fr 54px; gap:10px; margin-bottom:26px; }
+.action { border:1px solid var(--line); border-radius:7px; background:white; min-height:42px; font-weight:600; color:#262626; }
+.action.following { background:#f5f5f5; }
+.tabs { display:flex; justify-content:center; gap:76px; border-bottom:1px solid var(--line); margin-bottom:4px; }
+.tab { position:relative; border:0; background:transparent; color:#8e8e8e; padding:15px 0 13px; min-width:36px; }
+.tab.active { color:#262626; }
+.tab.active:after { content:""; height:1px; background:#262626; position:absolute; bottom:-1px; left:-16px; right:-16px; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; }
+.post { position:relative; aspect-ratio:1/1; border:0; padding:0; overflow:hidden; background:#eee; }
+.post img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .25s; }
+.post:hover img { transform:scale(1.025); }
+.heart { position:absolute; right:12px; top:10px; color:white; font-size:20px; text-shadow:0 1px 5px #0005; }
+.post .caption { position:absolute; left:0; right:0; bottom:0; padding:22px 9px 9px; color:white; font-size:12px; line-height:1.4; text-align:left; background:linear-gradient(transparent,#0008); }
+.footer { padding:24px 0; color:#999; font-size:11px; text-align:center; }
 
-.comments-title {
-  font-size: 14px;
-  font-weight: 650;
-  margin-bottom: 10px;
+.modal {
+  display:none; position:fixed; inset:0; z-index:10;
+  background:#000b; align-items:center; justify-content:center; padding:44px 20px 20px;
 }
-
-.comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 220px;
-  overflow-y: auto;
-  font-size: 13px;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
+.modal.open { display:flex; }
+.close { position:fixed; top:12px; right:20px; color:white; background:transparent; border:0; font-size:36px; font-weight:200; }
+.modal-card {
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  width:min(100%,1000px); max-height:90vh; background:white; overflow:hidden;
 }
-
-.comment-item {
-  display: flex;
-  gap: 7px;
+.modal-image { background:#111; display:flex; align-items:center; justify-content:center; min-width:0; min-height:0; }
+.modal-image img { width:100%; height:100%; max-height:90vh; object-fit:contain; }
+.modal-side { display:flex; flex-direction:column; min-width:0; min-height:0; overflow:hidden; }
+.modal-head { display:flex; align-items:center; gap:10px; padding:14px; border-bottom:1px solid #eee; font-size:13px; font-weight:650; flex-shrink:0; }
+.tiny-avatar { width:30px; height:30px; border-radius:50%; padding:2px; background:linear-gradient(135deg,#ffb347,#ff5277,#a855f7); }
+.tiny-avatar span { display:grid; place-items:center; width:100%; height:100%; border-radius:50%; background:#19151d; color:white; font-size:10px; }
+.modal-caption { padding:16px 15px; font-size:13px; line-height:1.7; border-bottom:1px solid #eee; }
+.modal-bottom { padding:13px 15px; font-size:13px; color:#555; border-bottom:1px solid #eee; }
+.comments-panel { display:flex; flex-direction:column; padding:13px 15px; min-height:0; flex:1; }
+.comments-title { font-size:14px; font-weight:650; margin-bottom:12px; }
+.comments-list { display:flex; flex-direction:column; gap:12px; overflow-y:auto; min-height:70px; max-height:300px; font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
+.comment-item { display:flex; gap:7px; }
+.comment-name { font-weight:650; flex-shrink:0; }
+.comment-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+.comment-empty { color:#999; padding:10px 0; }
+.comment-form { margin-top:12px; border-top:1px solid #eee; padding-top:9px; flex-shrink:0; }
+.comment-form input { width:100%; min-width:0; border:0; outline:none; font:inherit; font-size:13px; padding:8px 0; background:transparent; }
+.comment-write-row { display:flex; align-items:center; gap:10px; }
+.comment-write-row button { border:0; background:white; color:var(--blue); font-weight:650; font-size:13px; flex-shrink:0; }
+.comment-write-row button:disabled { opacity:.45; }
+.comment-status { margin:5px 0 0; font-size:12px; color:#777; line-height:1.5; }
+.toast {
+  position:fixed; left:50%; bottom:28px; transform:translate(-50%,20px);
+  opacity:0; background:#262626; color:white; padding:11px 16px;
+  border-radius:8px; font-size:13px; transition:.25s; pointer-events:none; z-index:20;
 }
-
-.comment-name {
-  font-weight: 650;
-  flex-shrink: 0;
-}
-
-.comment-text {
-  white-space: pre-wrap;
-}
-
-.comment-empty {
-  color: #999;
-  padding: 8px 0;
-}
-
-.comment-form {
-  margin-top: 14px;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 10px;
-}
-
-.comment-form input {
-  width: 100%;
-  min-width: 0;
-  border: 0;
-  outline: none;
-  font: inherit;
-  font-size: 13px;
-  padding: 8px 0;
-  background: transparent;
-}
-
-.comment-write-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.comment-write-row button {
-  border: 0;
-  background: transparent;
-  color: #0095f6;
-  font-weight: 650;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-
-.comment-write-row button:disabled {
-  opacity: .45;
-}
-
-.comment-status {
-  margin: 5px 0 0;
-  font-size: 12px;
-  color: #777;
-}
+.toast.show { opacity:1; transform:translate(-50%,0); }
 
 @media(max-width:650px) {
-  .comments-panel {
-    min-height: 170px;
-  }
-
-  .comments-list {
-    max-height: 180px;
-  }
+  .app { padding:14px 0 40px; }
+  .topbar { padding:0 16px; margin-bottom:20px; }
+  .profile { grid-template-columns:100px 1fr; gap:16px; padding:0 16px; margin-bottom:22px; align-items:start; }
+  .avatar { width:86px; height:86px; padding:3px; }
+  .avatar-inner { font-size:27px; border-width:3px; }
+  .heading { gap:7px; margin-bottom:15px; }
+  .username { font-size:19px; }
+  .stats { gap:0; justify-content:space-between; margin-bottom:14px; }
+  .stat { font-size:12px; text-align:center; }
+  .stat strong { display:block; font-size:15px; }
+  .bio { font-size:12px; }
+  .actions { padding:0 12px; grid-template-columns:1fr 1fr 42px; gap:6px; margin-bottom:18px; }
+  .action { min-height:36px; font-size:13px; }
+  .tabs { gap:74px; }
+  .tab { padding:12px 0 10px; }
+  .grid { gap:2px; }
+  .post .caption { display:none; }
+  .modal { padding:38px 0 0; align-items:flex-start; }
+  .modal-card { display:flex; flex-direction:column; width:100%; max-width:480px; max-height:94vh; overflow:auto; }
+  .modal-image { flex-shrink:0; aspect-ratio:1/1; min-height:0; }
+  .modal-image img { width:100%; height:100%; max-height:none; object-fit:cover; }
+  .modal-side { overflow:visible; }
+  .comments-list { max-height:180px; }
+  .close { top:2px; right:12px; }
 }
-
-    @media(max-width:650px){
-      .app{padding:14px 0 40px}.topbar{padding:0 16px;margin-bottom:20px}
-      .profile{grid-template-columns:100px 1fr;gap:16px;padding:0 16px;margin-bottom:22px;align-items:start}
-      .avatar{width:86px;height:86px;padding:3px}.avatar-inner{font-size:27px;border-width:3px}
-      .heading{gap:7px;margin-bottom:15px}.username{font-size:19px}
-      .stats{gap:0;justify-content:space-between;margin-bottom:14px}.stat{font-size:12px;text-align:center}.stat strong{display:block;font-size:15px}
-      .bio{font-size:12px;line-height:1.55}
-      .actions{padding:0 12px;grid-template-columns:1fr 1fr 42px;gap:6px;margin-bottom:18px}
-      .action{min-height:36px;font-size:13px}
-      .tabs{gap:74px}.tab{padding:12px 0 10px}
-      .grid{gap:2px}.post .caption{display:none}
-      .modal-card{grid-template-columns:1fr;max-width:420px;max-height:90vh;overflow:auto}
-      .modal-image{min-height:0;aspect-ratio:1/1}.modal-image img{max-height:none}
-      .modal-caption{padding:13px}.modal-bottom{padding:12px}
-      /* 익명 댓글 영역 */
-.comments-area {
-  border-top: 1px solid #eee;
-  padding: 12px 14px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.comments-title {
-  font-size: 13px;
-  font-weight: 650;
-  margin-bottom: 12px;
-}
-
-.comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.comment-row {
-  font-size: 13px;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-.comment-name {
-  font-weight: 650;
-  margin-right: 7px;
-}
-
-.comment-date {
-  display: block;
-  color: #999;
-  font-size: 11px;
-}
-
-.comment-form {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-}
-
-.comment-input {
-  flex: 1;
-  min-width: 0;
-  resize: vertical;
-  border: 1px solid #ddd;
-  border-radius: 18px;
-  padding: 10px 13px;
-  font: inherit;
-  font-size: 13px;
-}
-
-.comment-submit {
-  border: none;
-  background: white;
-  color: #0095f6;
-  font-weight: 700;
-  padding: 10px 4px;
-  cursor: pointer;
-}
-
-.comment-submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.comment-status {
-  color: #777;
-  font-size: 12px;
-  line-height: 1.5;
-}
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <main class="app">
-    <header class="topbar">
-      <button class="back" aria-label="뒤로" id="backBtn"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3 6 12l9 9"/></svg></button>
-      <div class="top-actions">
-        <button class="more" aria-label="알림" id="bellBtn"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4M12 3V1"/></svg></button>
-        <div class="menu">
-          <button class="more" aria-label="더 보기" id="moreBtn"><svg width="28" height="18" viewBox="0 0 28 18" fill="currentColor"><circle cx="4" cy="9" r="1.8"/><circle cx="14" cy="9" r="1.8"/><circle cx="24" cy="9" r="1.8"/></svg></button>
-          <div class="menu-pop" id="menuPop"><button data-toast="가상 프로필 링크가 복사된 것처럼 표시됩니다">프로필 링크 복사</button><button data-toast="이 프로필은 데모용 가상 계정입니다">이 프로필 정보</button></div>
+<main class="app">
+  <header class="topbar">
+    <button class="back" id="backBtn" aria-label="뒤로">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3 6 12l9 9"/></svg>
+    </button>
+    <div class="top-actions">
+      <button class="more" id="bellBtn" aria-label="알림">
+        <svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4M12 3V1"/></svg>
+      </button>
+      <div class="menu">
+        <button class="more" id="moreBtn" aria-label="더 보기">•••</button>
+        <div class="menu-pop" id="menuPop">
+          <button data-toast="가상 프로필 링크입니다">프로필 링크 복사</button>
+          <button data-toast="이 프로필은 데모용 가상 계정입니다">이 프로필 정보</button>
         </div>
       </div>
-    </header>
-
-    <section class="profile">
-      <div class="avatar-wrap"><div class="avatar" aria-label="프로필 이미지"><div class="avatar-inner">dh.</div></div></div>
-      <div class="profile-info">
-        <div class="heading"><span class="username">dohun.zip</span><span class="verified" title="데모 장식 아이콘">✓</span></div>
-        <div class="stats">
-          <div class="stat"><strong>9</strong> 게시물</div>
-          <div class="stat"><strong>3,482</strong> 팔로워</div>
-          <div class="stat"><strong>5</strong> 팔로잉</div>
-        </div>
-        <div class="bio">
-          <div class="display-name">김도훈</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="actions" aria-label="프로필 작업">
-      <button class="action following" id="followBtn">팔로잉⌄</button>
-      <button class="action" id="messageBtn">메시지</button>
-      <button class="action" id="friendBtn" aria-label="비슷한 계정"><svg width="15" height="10" viewBox="0 0 15 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 2 5.5 5L13 2"/></svg></button>
-    </section>
-
-    <nav class="tabs" aria-label="프로필 탭">
-      <button class="tab active" id="postsTab" aria-label="게시물"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20"/><path d="M2 9h20M2 15h20M9 2v20M15 2v20"/></svg></button>
-      <button class="tab" id="taggedTab" aria-label="태그된 게시물"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="9" r="3.2"/><path d="M5 20c.8-3.6 3.1-5.4 7-5.4s6.2 1.8 7 5.4"/></svg></button>
-    </nav>
-
-    <section class="grid" id="postGrid" aria-label="게시물 9개"></section>
-    <div class="footer">이 페이지는 포트폴리오·팬메이드용 가상 프로필입니다. Instagram과 제휴하지 않습니다.</div>
-  </main>
-
-  <div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="게시물 상세">
-    <button class="close" id="closeModal" aria-label="닫기">×</button>
-    <div class="modal-card">
-      <div class="modal-image"><img id="modalImg" src="" alt="게시물 이미지"></div>
-      <div class="modal-side">
-        <div class="modal-head"><div class="tiny-avatar"><span>dh.</span></div><span>dohun.zip</span><span style="margin-left:auto">•••</span></div>
-       <div class="modal-caption" id="modalCaption"></div>
-
-<section class="comments-area">
-  <div class="comments-title" id="commentsTitle">
-    댓글
-  </div>
-
-  <div class="comments-list" id="commentsList">
-    <p class="comment-status">댓글을 불러오는 중...</p>
-  </div>
-
-  <form class="comment-form" id="commentForm">
-    <textarea
-      class="comment-input"
-      id="commentInput"
-      maxlength="500"
-      rows="1"
-      placeholder="익명으로 댓글 달기..."
-      aria-label="댓글 입력"
-      required
-    ></textarea>
-
-    <button
-      class="comment-submit"
-      id="commentSubmit"
-      type="submit"
-    >게시</button>
-  </form>
-
-  <p class="comment-status" id="commentStatus">
-    로그인 없이 작성 가능 · 댓글은 공개됩니다.
-  </p>
-</section>
-
-
-<div class="modal-bottom" id="modalLikes"></div>
-
-<div class="comments-panel">
-  <div class="comments-title">댓글</div>
-  <div id="commentsList" class="comments-list">
-    댓글을 불러오는 중...
-  </div>
-
-  <form id="commentForm" class="comment-form">
-    <input
-      id="commentName"
-      type="text"
-      maxlength="30"
-      placeholder="닉네임 (비워두면 익명)"
-      aria-label="닉네임"
-    >
-    <div class="comment-write-row">
-      <input
-        id="commentBody"
-        type="text"
-        maxlength="500"
-        placeholder="댓글 달기..."
-        aria-label="댓글 내용"
-        required
-      >
-      <button id="commentSubmit" type="submit">게시</button>
     </div>
-    <p id="commentStatus" class="comment-status" aria-live="polite"></p>
-  </form>
+  </header>
+
+  <section class="profile">
+    <div class="avatar-wrap"><div class="avatar"><div class="avatar-inner">dh.</div></div></div>
+    <div class="profile-info">
+      <div class="heading"><span class="username">dohun.zip</span><span class="verified">✓</span></div>
+      <div class="stats">
+        <div class="stat"><strong>9</strong> 게시물</div>
+        <div class="stat"><strong>3,482</strong> 팔로워</div>
+        <div class="stat"><strong>5</strong> 팔로잉</div>
+      </div>
+      <div class="bio"><div class="display-name">김도훈</div></div>
+    </div>
+  </section>
+
+  <section class="actions">
+    <button class="action following" id="followBtn">팔로잉⌄</button>
+    <button class="action" id="messageBtn">메시지</button>
+    <button class="action" id="friendBtn" aria-label="비슷한 계정">⌄</button>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" id="postsTab" aria-label="게시물">▦</button>
+    <button class="tab" id="taggedTab" aria-label="태그된 게시물">▣</button>
+  </nav>
+
+  <section class="grid" id="postGrid" aria-label="게시물 9개"></section>
+  <div class="footer">이 페이지는 포트폴리오·팬메이드용 가상 프로필입니다. Instagram과 제휴하지 않습니다.</div>
+</main>
+
+<div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="게시물 상세">
+  <button class="close" id="closeModal" aria-label="닫기">×</button>
+  <div class="modal-card">
+    <div class="modal-image"><img id="modalImg" src="" alt="게시물 이미지"></div>
+    <div class="modal-side">
+      <div class="modal-head">
+        <div class="tiny-avatar"><span>dh.</span></div>
+        <span>dohun.zip</span><span style="margin-left:auto">•••</span>
+      </div>
+      <div class="modal-caption" id="modalCaption"></div>
+      <div class="modal-bottom" id="modalLikes"></div>
+
+      <section class="comments-panel">
+        <div class="comments-title">댓글</div>
+        <div id="commentsList" class="comments-list">게시물을 선택해 주세요.</div>
+
+        <form id="commentForm" class="comment-form">
+          <input id="commentName" type="text" maxlength="30" placeholder="닉네임 (비워두면 익명)" aria-label="닉네임">
+          <div class="comment-write-row">
+            <input id="commentBody" type="text" maxlength="500" placeholder="댓글 달기..." aria-label="댓글 내용" required>
+            <button id="commentSubmit" type="submit">게시</button>
+          </div>
+          <p id="commentStatus" class="comment-status" aria-live="polite">로그인 없이 작성 가능 · 댓글은 공개됩니다.</p>
+        </form>
+      </section>
+    </div>
+  </div>
 </div>
 
-      </div>
-    </div>
-  </div>
-  <div class="toast" id="toast" role="status"></div>
-const SUPABASE_URL = "https://jukqqeripicztlkadwew.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_Ppmfo2If2wWIb6BAt25E-A_FZUoxnNi";
+<div class="toast" id="toast" role="status"></div>
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-let activePostIndex = 0;
 <script>
+/* Supabase 프로젝트의 공개 Publishable key */
+const SUPABASE_URL = 'https://jukqqeripicztlkadwew.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Ppmfo2If2wWIb6BAt25E-A_FZUoxnNi';
+
+/* 게시물 9개 */
 const posts = [
   {img:"https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85",caption:"별거 아닌 하루도 너랑 있으면 기억하고 싶어 🤍",likes:"좋아요 284개",tag:"데이트"},
   {img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",caption:"우리 단골 될 것 같은 곳. 다음엔 네가 커피 사기 ☕",likes:"좋아요 196개",tag:"카페"},
@@ -400,20 +234,9 @@ const posts = [
   {img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85",caption:"우리만 아는 작은 여행 🌿",likes:"좋아요 223개",tag:"여행"},
   {img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"오래오래 지금처럼. 🖤",likes:"좋아요 648개",tag:"럽스타그램"}
 ];
+
 const grid = document.getElementById('postGrid');
-posts.forEach((p,i)=>{
-  const b=document.createElement('button'); b.className='post'; b.setAttribute('aria-label',`게시물 ${i+1}: ${p.caption}`);
-  b.innerHTML=`<img src="${p.img}" alt="${p.tag} 사진" loading="${i>2?'lazy':'eager'}"><span class="heart">♥</span><span class="caption">${p.caption}</span>`;
-  b.addEventListener('click',()=>openPost(i)); grid.appendChild(b);
-});
-const modal=document.getElementById('postModal');
-
-/* ① Supabase 연결 정보: 이 두 값을 네 프로젝트 정보로 교체 */
-const SUPABASE_URL = 'https://jukqqeripicztlkadwew.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Ppmfo2If2wWIb6BAt25E-A_FZUoxnNi';
-
-let currentPostId = 0;
-
+const modal = document.getElementById('postModal');
 const commentsList = document.getElementById('commentsList');
 const commentForm = document.getElementById('commentForm');
 const commentName = document.getElementById('commentName');
@@ -421,15 +244,40 @@ const commentBody = document.getElementById('commentBody');
 const commentSubmit = document.getElementById('commentSubmit');
 const commentStatus = document.getElementById('commentStatus');
 
+let currentPostId = 0;
+
+/* 댓글 요청 헤더: 공개 Publishable key만 사용 */
 function supabaseHeaders() {
-  return {
-    apikey: SUPABASE_KEY,
-    Authorization: `Bearer ${SUPABASE_KEY}`
-  };
+  return { 'apikey': SUPABASE_KEY };
 }
 
-/* ② 선택한 게시물의 댓글을 불러오기 */
-const commentsList = document.getElementById('commentsList');
+/* 게시물 사진 격자 생성 */
+posts.forEach((post, index) => {
+  const button = document.createElement('button');
+  button.className = 'post';
+  button.setAttribute('aria-label', `게시물 ${index + 1}: ${post.caption}`);
+
+  const img = document.createElement('img');
+  img.src = post.img;
+  img.alt = post.tag + ' 사진';
+  img.loading = index > 2 ? 'lazy' : 'eager';
+
+  const heart = document.createElement('span');
+  heart.className = 'heart';
+  heart.textContent = '♥';
+
+  const caption = document.createElement('span');
+  caption.className = 'caption';
+  caption.textContent = post.caption;
+
+  button.append(img, heart, caption);
+  button.addEventListener('click', () => openPost(index));
+  grid.appendChild(button);
+});
+
+/* 댓글 불러오기 */
+async function loadComments(postId) {
+  commentsList.replaceChildren();
   commentsList.textContent = '댓글을 불러오는 중...';
 
   try {
@@ -439,17 +287,19 @@ const commentsList = document.getElementById('commentsList');
       '&order=created_at.asc';
 
     const response = await fetch(url, {
+      method: 'GET',
       headers: supabaseHeaders()
     });
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      const details = await response.text();
+      throw new Error(`HTTP ${response.status}: ${details}`);
     }
 
     const comments = await response.json();
     commentsList.replaceChildren();
 
-    if (comments.length === 0) {
+    if (!comments.length) {
       const empty = document.createElement('div');
       empty.className = 'comment-empty';
       empty.textContent = '첫 댓글을 남겨 보세요 🤍';
@@ -474,12 +324,12 @@ const commentsList = document.getElementById('commentsList');
     });
   } catch (error) {
     console.error('댓글 조회 오류:', error);
-    commentsList.textContent =
-      '댓글을 불러오지 못했어요. Supabase 연결 설정을 확인해 주세요.';
+    commentsList.textContent = '댓글을 불러오지 못했어요. Supabase URL, 공개 키, 테이블 권한을 확인해 주세요.';
+    commentStatus.textContent = '오류가 계속되면 개발자 도구 Console을 확인해 주세요.';
   }
 }
 
-/* ③ 익명 댓글 저장하기 */
+/* 댓글 등록 */
 commentForm.addEventListener('submit', async event => {
   event.preventDefault();
 
@@ -491,7 +341,7 @@ commentForm.addEventListener('submit', async event => {
     return;
   }
 
-  if (body.length > 500 || displayName.length > 30) {
+  if (displayName.length > 30 || body.length > 500) {
     commentStatus.textContent = '닉네임은 30자, 댓글은 500자까지 가능해.';
     return;
   }
@@ -500,25 +350,23 @@ commentForm.addEventListener('submit', async event => {
   commentStatus.textContent = '댓글을 등록하는 중...';
 
   try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/comments`,
-      {
-        method: 'POST',
-        headers: {
-          ...supabaseHeaders(),
-          'Content-Type': 'application/json',
-          Prefer: 'return=minimal'
-        },
-        body: JSON.stringify({
-          post_id: currentPostId,
-          display_name: displayName,
-          body: body
-        })
-      }
-    );
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/comments`, {
+      method: 'POST',
+      headers: {
+        ...supabaseHeaders(),
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        post_id: currentPostId,
+        display_name: displayName,
+        body: body
+      })
+    });
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      const details = await response.text();
+      throw new Error(`HTTP ${response.status}: ${details}`);
     }
 
     commentBody.value = '';
@@ -526,19 +374,18 @@ commentForm.addEventListener('submit', async event => {
     await loadComments(currentPostId);
   } catch (error) {
     console.error('댓글 등록 오류:', error);
-    commentStatus.textContent =
-      '등록에 실패했어. Supabase 설정을 확인해 줘.';
+    commentStatus.textContent = '등록에 실패했어. Supabase 테이블과 권한 설정을 확인해 줘.';
   } finally {
     commentSubmit.disabled = false;
   }
 });
 
-/* ④ 게시물을 열 때 해당 게시물의 댓글 표시 */
-function openPost(i) {
-  const p = posts[i];
-  currentPostId = i;
+/* 게시물 상세 열기 */
+function openPost(index) {
+  const post = posts[index];
+  currentPostId = index;
 
-  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalImg').src = post.img;
 
   const caption = document.getElementById('modalCaption');
   caption.replaceChildren();
@@ -546,66 +393,77 @@ function openPost(i) {
   const username = document.createElement('strong');
   username.textContent = 'dohun.zip';
 
-  const captionText = document.createTextNode(' ' + p.caption);
+  const captionText = document.createTextNode(' ' + post.caption);
   caption.append(username, captionText);
 
-  document.getElementById('modalLikes').textContent = p.likes;
+  document.getElementById('modalLikes').textContent = post.likes;
 
   commentName.value = '';
   commentBody.value = '';
-  commentStatus.textContent = '';
+  commentStatus.textContent = '로그인 없이 작성 가능 · 댓글은 공개됩니다.';
 
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  loadComments(i);
+  loadComments(index);
 }
 
-function loadComments(postIndex){
-  const container = document.getElementById('giscusContainer');
-  container.innerHTML = '';
-  // Replace these placeholders after configuring Giscus. See README.md.
-  const repo = 'YOUR_GITHUB_USERNAME/YOUR_REPOSITORY';
-  const repoId = 'YOUR_GISCUS_REPO_ID';
-  const category = 'Comments';
-  const categoryId = 'YOUR_GISCUS_CATEGORY_ID';
-  if (repo.includes('YOUR_') || repoId.includes('YOUR_') || categoryId.includes('YOUR_')) {
-    container.innerHTML = '<p class="comments-help">댓글 설정 전이에요. 저장소의 README.md에서 설정 방법을 확인해 주세요.</p>';
-    return;
-  }
-  const s = document.createElement('script');
-  s.src = 'https://giscus.app/client.js';
-  s.async = true;
-  s.crossOrigin = 'anonymous';
-  s.setAttribute('data-repo', repo);
-  s.setAttribute('data-repo-id', repoId);
-  s.setAttribute('data-category', category);
-  s.setAttribute('data-category-id', categoryId);
-  s.setAttribute('data-mapping', 'specific');
-  s.setAttribute('data-term', 'dohun-profile-post-' + (postIndex + 1));
-  s.setAttribute('data-strict', '1');
-  s.setAttribute('data-reactions-enabled', '1');
-  s.setAttribute('data-emit-metadata', '0');
-  s.setAttribute('data-input-position', 'top');
-  s.setAttribute('data-theme', 'light');
-  s.setAttribute('data-lang', 'ko');
-  container.appendChild(s);
+function closePost() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
 }
-function closePost(){modal.classList.remove('open');document.body.style.overflow='';}
-document.getElementById('closeModal').addEventListener('click',closePost);
-modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closePost()});
-const toast=document.getElementById('toast');let toastTimer;
-function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2300);}
-document.getElementById('followBtn').addEventListener('click',()=>{const b=document.getElementById('followBtn');const following=b.classList.toggle('following');b.textContent=following?'팔로잉⌄':'팔로우';showToast(following?'팔로잉 중입니다':'팔로우를 시작했습니다')});
-document.getElementById('messageBtn').addEventListener('click',()=>showToast('가상 프로필에서는 메시지를 보낼 수 없습니다.'));
-document.getElementById('friendBtn').addEventListener('click',()=>showToast('추천 계정 기능은 데모용입니다.'));
-document.getElementById('bellBtn').addEventListener('click',()=>showToast('게시물 알림이 켜진 것처럼 표시됩니다.'));
-document.getElementById('backBtn').addEventListener('click',()=>showToast('데모 프로필 화면입니다.'));
-document.getElementById('moreBtn').addEventListener('click',()=>document.getElementById('menuPop').classList.toggle('show'));
-document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>{showToast(b.dataset.toast);document.getElementById('menuPop').classList.remove('show')}));
-document.getElementById('postsTab').addEventListener('click',()=>{document.getElementById('postsTab').classList.add('active');document.getElementById('taggedTab').classList.remove('active');grid.style.display='grid'});
-document.getElementById('taggedTab').addEventListener('click',()=>{document.getElementById('taggedTab').classList.add('active');document.getElementById('postsTab').classList.remove('active');grid.style.display='none';showToast('태그된 게시물이 없습니다.')});
+
+document.getElementById('closeModal').addEventListener('click', closePost);
+modal.addEventListener('click', event => {
+  if (event.target === modal) closePost();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closePost();
+});
+
+/* 데모 버튼 동작 */
+const toast = document.getElementById('toast');
+let toastTimer;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
+}
+
+document.getElementById('followBtn').addEventListener('click', () => {
+  const button = document.getElementById('followBtn');
+  const following = button.classList.toggle('following');
+  button.textContent = following ? '팔로잉⌄' : '팔로우';
+  showToast(following ? '팔로잉 중입니다' : '팔로우를 시작했습니다');
+});
+
+document.getElementById('messageBtn').addEventListener('click', () => showToast('가상 프로필에서는 메시지를 보낼 수 없습니다.'));
+document.getElementById('friendBtn').addEventListener('click', () => showToast('추천 계정 기능은 데모용입니다.'));
+document.getElementById('bellBtn').addEventListener('click', () => showToast('게시물 알림이 켜진 것처럼 표시됩니다.'));
+document.getElementById('backBtn').addEventListener('click', () => showToast('데모 프로필 화면입니다.'));
+document.getElementById('moreBtn').addEventListener('click', () => document.getElementById('menuPop').classList.toggle('show'));
+
+document.querySelectorAll('[data-toast]').forEach(button => {
+  button.addEventListener('click', () => {
+    showToast(button.dataset.toast);
+    document.getElementById('menuPop').classList.remove('show');
+  });
+});
+
+document.getElementById('postsTab').addEventListener('click', () => {
+  document.getElementById('postsTab').classList.add('active');
+  document.getElementById('taggedTab').classList.remove('active');
+  grid.style.display = 'grid';
+});
+
+document.getElementById('taggedTab').addEventListener('click', () => {
+  document.getElementById('taggedTab').classList.add('active');
+  document.getElementById('postsTab').classList.remove('active');
+  grid.style.display = 'none';
+  showToast('태그된 게시물이 없습니다.');
+});
 </script>
 </body>
 </html>
