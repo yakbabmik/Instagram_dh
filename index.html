@@ -84,8 +84,15 @@ button{cursor:pointer}
 .story-screen{position:relative;width:min(100%,430px);height:min(100dvh,900px);overflow:hidden;background:#202020}
 .story-photo{position:absolute;inset:0;width:100%;height:100%;background:#171717;object-fit:contain}
 .story-shade{position:absolute;inset:0;background:linear-gradient(to bottom,#0008,transparent 22%,transparent 70%,#0008);pointer-events:none}
-.story-progress{position:absolute;z-index:2;top:9px;left:8px;right:8px;height:2px;background:#ffffff66}
-.story-progress-fill{width:100%;height:100%;background:white}
+
+/* 스토리 진행 바: 사진 한 장당 흰색 줄 하나 */
+.story-progress{position:absolute;z-index:2;top:9px;left:8px;right:8px;display:flex;gap:4px}
+.story-seg{flex:1;height:2px;border-radius:2px;background:#ffffff66;overflow:hidden}
+.story-seg i{display:block;width:0;height:100%;background:#fff}
+.story-seg.done i{width:100%}
+.story-seg.active i{animation:storyFill 5s linear forwards}
+@keyframes storyFill{from{width:0}to{width:100%}}
+
 .story-header{position:absolute;z-index:3;top:20px;left:12px;right:12px;display:flex;align-items:center;gap:9px}
 .story-profile{width:35px;height:35px;border:1px solid #ffffff88;border-radius:50%;object-fit:cover}
 .story-user{font-size:13px;font-weight:650}
@@ -250,7 +257,7 @@ button{cursor:pointer}
 <div class="story-screen">
 <img class="story-photo" id="storyPhoto" src="./하나만먹자.jpg" alt="스토리 사진">
 <div class="story-shade"></div>
-<div class="story-progress"><div class="story-progress-fill"></div></div>
+<div class="story-progress" id="storyProgress"></div>
 <div class="story-header">
 <img class="story-profile" src="./브이.jpg" alt="">
 <div><div class="story-user">ybab.mik <span class="story-time" id="storyTime">· 3시간</span></div></div>
@@ -275,6 +282,9 @@ button{cursor:pointer}
 <script>
 const SUPABASE_URL = 'https://jukqqeripicztlkadwew.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Ppmfo2If2wWIb6BAt25E-A_FZUoxnNi';
+
+/* 스토리 한 장당 보여주는 시간(밀리초). 5000 = 5초 */
+const STORY_DURATION = 5000;
 
 const posts = [
 {img:"https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85",caption:"별거 아닌 하루도 너랑 있으면 기억하고 싶어 🤍",likes:"좋아요 284개",tag:"데이트"},
@@ -304,6 +314,7 @@ const commentBody = document.getElementById('commentBody');
 const commentSubmit = document.getElementById('commentSubmit');
 const commentStatus = document.getElementById('commentStatus');
 const storyViewer = document.getElementById('storyViewer');
+const storyProgress = document.getElementById('storyProgress');
 const photoViewer = document.getElementById('profilePhotoViewer');
 const toast = document.getElementById('toast');
 
@@ -475,6 +486,40 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('show'),2300);
 }
 
+/* 사진 수만큼 진행 바 칸을 만들고, 현재 칸은 차오르는 애니메이션으로 표시 */
+function renderStoryProgress() {
+  storyProgress.replaceChildren();
+
+  stories.forEach((_,i) => {
+    const seg = document.createElement('div');
+    seg.className = 'story-seg';
+
+    const fill = document.createElement('i');
+    seg.appendChild(fill);
+
+    if (i < currentStoryIndex) {
+      seg.classList.add('done');
+    } else if (i === currentStoryIndex) {
+      seg.classList.add('active');
+      fill.style.animationDuration = STORY_DURATION + 'ms';
+      fill.addEventListener('animationend',autoNextStory,{once:true});
+    }
+
+    storyProgress.appendChild(seg);
+  });
+}
+
+/* 시간이 다 되면 다음 사진으로, 마지막 사진이면 스토리를 닫음 */
+function autoNextStory() {
+  if (!storyViewer.classList.contains('open')) return;
+
+  if (currentStoryIndex < stories.length - 1) {
+    openStory(currentStoryIndex + 1);
+  } else {
+    closeStory();
+  }
+}
+
 function openStory(index) {
   currentStoryIndex = (index + stories.length) % stories.length;
   const story = stories[currentStoryIndex];
@@ -482,12 +527,15 @@ function openStory(index) {
   document.getElementById('storyPhoto').src = story.img;
   document.getElementById('storyTime').textContent = story.time;
 
+  renderStoryProgress();
+
   storyViewer.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeStory() {
   storyViewer.classList.remove('open');
+  storyProgress.replaceChildren();
   document.body.style.overflow =
     modal.classList.contains('open') ||
     photoViewer.classList.contains('open') ? 'hidden' : '';
