@@ -489,44 +489,14 @@ button { cursor:pointer; }
   position:absolute;
   z-index:2;
   top:65px;
-  bottom:100px;
+  bottom:15px;
   width:28%;
   border:0;
   background:transparent;
 }
 .story-prev { left:0; }
 .story-next { right:0; }
-.story-footer {
-  position:absolute;
-  z-index:4;
-  right:12px;
-  bottom:16px;
-  left:12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.story-footer button {
-  padding:10px 12px;
-  border:1px solid #ffffffaa;
-  border-radius:25px;
-  background:#0002;
-  color:white;
-  font-size:12px;
-  white-space:nowrap;
-}
-.story-footer .reply { flex:1; text-align:left; }
-.story-hint {
-  position:absolute;
-  z-index:3;
-  right:0;
-  bottom:65px;
-  left:0;
-  color:#ffffffc9;
-  font-size:12px;
-  text-align:center;
-  pointer-events:none;
-}
+
 .toast {
   position:fixed;
   left:50%;
@@ -591,8 +561,6 @@ button { cursor:pointer; }
   .comments-list { max-height:180px; }
   .close { top:2px; right:12px; }
   .story-screen { width:100%; height:100dvh; }
-  .story-footer { gap:6px; }
-  .story-footer button { padding:10px 9px; font-size:11px; }
 }
 </style>
 </head>
@@ -728,19 +696,12 @@ button { cursor:pointer; }
         <div class="story-user">yabab.mik <span class="story-time" id="storyTime">· 3시간</span></div>
       </div>
       <div class="story-header-actions">
-        <button class="story-icon" id="storyStarBtn" aria-label="하이라이트 표시">☆</button>
         <button class="story-icon" id="storyMenuBtn" aria-label="스토리 메뉴">•••</button>
         <button class="story-icon story-close" id="closeStory" aria-label="스토리 닫기">×</button>
       </div>
     </div>
     <button class="story-nav story-prev" id="storyPrev" aria-label="이전 스토리"></button>
     <button class="story-nav story-next" id="storyNext" aria-label="다음 스토리"></button>
-    <div class="story-hint" id="storyCaption">하나만 먹자 🐶</div>
-    <div class="story-footer">
-      <button class="reply" id="storyReplyBtn">메시지 보내기...</button>
-      <button id="storyShareBtn">공유</button>
-      <button id="storyMentionBtn">@</button>
-    </div>
   </div>
 </div>
 
@@ -763,10 +724,10 @@ const posts = [
 ];
 
 const stories = [
-  {img:"./하나만먹자.jpg",caption:"하나만 먹자 🐶",time:"· 3시간"},
-  {img:"./브이.jpg",caption:"오늘도 무사히 🤍",time:"· 5시간"},
-  {img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",caption:"커피는 핑계고 수다 떨러 ☕",time:"· 8시간"},
-  {img:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85",caption:"같이 보고 싶었던 하늘",time:"· 1일"}
+  {img:"./하나만먹자.jpg",time:"· 3시간"},
+  {img:"./브이.jpg",time:"· 5시간"},
+  {img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",time:"· 8시간"},
+  {img:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85",time:"· 1일"}
 ];
 
 const grid = document.getElementById('postGrid');
@@ -962,7 +923,6 @@ function openStory(index) {
   const story = stories[currentStoryIndex];
 
   document.getElementById('storyPhoto').src = story.img;
-  document.getElementById('storyCaption').textContent = story.caption;
   document.getElementById('storyTime').textContent = story.time;
 
   storyViewer.classList.add('open');
@@ -997,17 +957,7 @@ document.getElementById('closeStory').addEventListener('click',closeStory);
 document.getElementById('storyNext').addEventListener('click',nextStory);
 document.getElementById('storyPrev').addEventListener('click',prevStory);
 
-document.getElementById('storyStarBtn').addEventListener('click',event=>{
-  const button = event.currentTarget;
-  const saved = button.textContent === '★';
-  button.textContent = saved ? '☆' : '★';
-  showToast(saved ? '별표 표시를 해제했어.' : '별표 표시는 현재 화면에서만 바뀌어.');
-});
-
 document.getElementById('storyMenuBtn').addEventListener('click',()=>showToast('스토리 메뉴는 데모 기능이야.'));
-document.getElementById('storyShareBtn').addEventListener('click',()=>showToast('실제 공유 기능은 별도 연결이 필요해.'));
-document.getElementById('storyMentionBtn').addEventListener('click',()=>showToast('@멘션은 데모 기능이야.'));
-document.getElementById('storyReplyBtn').addEventListener('click',()=>showToast('스토리 답장은 메시지 기능 연결이 필요해.'));
 
 /* 키보드 조작 */
 document.addEventListener('keydown',event=>{
