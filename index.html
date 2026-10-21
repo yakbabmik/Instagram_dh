@@ -277,7 +277,7 @@ body{background:#fff}
 
 <section class="actions">
 <button class="action following" id="followBtn">팔로잉⌄</button>
-<button class="action" id="messageBtn">메시지 보내기</button>
+<button class="action" id="messageBtn">메시지</button>
 <button class="action" id="friendBtn" aria-label="비슷한 계정">⌄</button>
 </section>
 
@@ -382,6 +382,7 @@ body{background:#fff}
 <form id="commentForm" class="comment-form">
 <input id="commentName" class="name-input" type="text" maxlength="30" placeholder="닉네임 (비워두면 익명)" aria-label="닉네임">
 <div class="comment-write-row">
+<span class="emoji" aria-hidden="true">😊</span>
 <input id="commentBody" type="text" maxlength="500" placeholder="댓글 달기..." aria-label="댓글 내용" required>
 <button id="commentSubmit" type="submit" disabled>게시</button>
 </div>
@@ -398,7 +399,7 @@ body{background:#fff}
 <div class="story-progress" id="storyProgress"></div>
 <div class="story-header">
 <img class="story-profile" src="./브이.jpg" alt="">
-<div><div class="story-user">ybab.mik <span class="story-time" id="storyTime">· 2026년 3월 12일</span></div></div>
+<div><div class="story-user">ybab.mik <span class="story-time" id="storyTime">· 3시간</span></div></div>
 <div class="story-header-actions">
 <button class="story-icon" id="storyMenuBtn" aria-label="스토리 메뉴">•••</button>
 <button class="story-icon story-close" id="closeStory" aria-label="스토리 닫기">×</button>
@@ -428,12 +429,9 @@ const posts = [
 {img:"./생일축하해.jpg",caption:"생일축하해",likes:"좋아요 284개",tag:"생일",pinned:true,date:"2025년 11월 7일"},
 {img:"./산책.jpg",images:["./산책.jpg","./산책-2.jpg","./산책-3.jpg"],caption:"오랜만",likes:"좋아요 196개",tag:"산책",date:"2026년 10월 21일"},
 {img:"./일본.jpg",images:["./일본.jpg","./일본-2.jpg"],caption:"✈️✈️",likes:"좋아요 331개",tag:"여행",date:"2026년 9월 30일"},
-{img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"사진 찍는 건 어색한데 너랑은 자꾸 남기게 돼 📸",likes:"좋아요 402개",tag:"커플"},
-{img:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85",caption:"정환이 형이 골라준 노을 색",likes:"좋아요 257개",tag:"노을"},
-{img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85",caption:"아무 계획 없이 떠난 주말, 이런 게 좋다",likes:"좋아요 178개",tag:"여행"},
-{img:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=85",caption:"너는 내 사진첩에 너무 많아",likes:"좋아요 516개",tag:"일상"},
-{img:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85",caption:"우리만 아는 작은 여행 🌿",likes:"좋아요 223개",tag:"여행"},
-{img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"오래오래 지금처럼. 🖤",likes:"좋아요 648개",tag:"럽스타그램"}
+{img:"./바다왔어.jpg",images:["./바다왔어.jpg","./바다왔어-2.jpg"],caption:"데이트",likes:"좋아요 402개",tag:"데이트",date:"2026년 8월 13일"},
+{img:"./백숙-1.jpg",images:["./백숙-1.jpg","./백숙-2.jpg","./백숙-3.jpg"],caption:"안먹는다고.",likes:"좋아요 257개",tag:"음식",date:"2026년 7월 17일"},
+{img:"./HTn27cbaoAEEiiK.jpg",images:["./HTn27cbaoAEEiiK.jpg","./HTn27cjbEAATP8V.jpg","./HTn27cfaEAAq76L.jpg","./일어나.jpg"],caption:"원인과 결과. 일어나.",likes:"좋아요 178개",tag:"일상",date:"2026년 5월 21일"},
 ];
 
 /* 스토리: 프로필 사진을 눌렀을 때 나오는 것 (두 장) */
@@ -447,7 +445,7 @@ const stories = [
 const highlights = [
   /* 0: ❤️ */
   [
-    { img: "./하나만먹자.jpg", time: "· 2026년 3월 12일" }
+    { img: "./하나만먹자.jpg", time: "· 2026년 10월 1일" }
   ],
   /* 1: 📷 */
   [
