@@ -163,7 +163,7 @@ button{cursor:pointer}
 
 <section class="profile">
 <div class="avatar-wrap">
-<button class="avatar" id="profilePhotoBtn" aria-label="프로필 사진 크게 보기">
+<button class="avatar" id="profilePhotoBtn" aria-label="스토리 보기">
 <img src="./브이.jpg" alt="김도훈 프로필 사진">
 </button>
 </div>
@@ -184,24 +184,21 @@ button{cursor:pointer}
 <button class="action" id="friendBtn" aria-label="비슷한 계정">⌄</button>
 </section>
 
+<!-- 하이라이트: 프로필 사진(스토리)과 별개. 하나만먹자 사진은 포함하지 않음 -->
 <section class="stories" aria-label="스토리 하이라이트">
 <button class="story-item add-story" id="newStoryBtn">
 <span class="story-ring new-ring"><span class="plus">＋</span></span>
 <span class="story-label">New</span>
 </button>
-<button class="story-item" data-story="0">
-<span class="story-ring"><img src="./하나만먹자.jpg" alt="강아지"></span>
-<span class="story-label">공놀이</span>
-</button>
-<button class="story-item" data-story="1">
+<button class="story-item" data-highlight="0">
 <span class="story-ring"><img src="./브이.jpg" alt="일상"></span>
 <span class="story-label">📷</span>
 </button>
-<button class="story-item" data-story="2">
+<button class="story-item" data-highlight="1">
 <span class="story-ring"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=300&q=80" alt="카페"></span>
 <span class="story-label">📷</span>
 </button>
-<button class="story-item" data-story="3">
+<button class="story-item" data-highlight="2">
 <span class="story-ring"><img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=300&q=80" alt="일상"></span>
 <span class="story-label">일상</span>
 </button>
@@ -274,7 +271,7 @@ button{cursor:pointer}
 <!-- 프로필 사진 전용 화면: 스토리와 별개로 작동 -->
 <div class="photo-viewer" id="profilePhotoViewer" role="dialog" aria-modal="true" aria-label="프로필 사진 크게 보기">
 <button class="photo-close" id="closeProfilePhoto" aria-label="닫기">×</button>
-<img src="./하나만먹자.jpg" alt="하나만먹자 사진">
+<img src="./브이.jpg" alt="프로필 사진">
 </div>
 
 <div class="toast" id="toast" role="status"></div>
@@ -298,11 +295,16 @@ const posts = [
 {img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"오래오래 지금처럼. 🖤",likes:"좋아요 648개",tag:"럽스타그램"}
 ];
 
+/* 스토리: 프로필 사진을 눌렀을 때 나오는 것 (하나만먹자 한 장) */
 const stories = [
-{ img: "./하나만먹자.jpg", time: "· 3시간" },
+{ img: "./하나만먹자.jpg", time: "· 3시간" }
+];
+
+/* 하이라이트: 프로필 아래 동그라미를 눌렀을 때 나오는 것 (그 외 사진들) */
+const highlights = [
 { img: "./언제와.webp", time: "· 2시간" },
-{img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85",time:"· 8시간"},
-{img:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85",time:"· 1일"}
+{ img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85", time: "· 8시간" },
+{ img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85", time: "· 1일" }
 ];
 
 const grid = document.getElementById('postGrid');
@@ -319,6 +321,7 @@ const photoViewer = document.getElementById('profilePhotoViewer');
 const toast = document.getElementById('toast');
 
 let currentPostId = 0;
+let currentList = stories;      /* 지금 열려 있는 목록 (stories 또는 highlights) */
 let currentStoryIndex = 0;
 let toastTimer;
 
@@ -486,11 +489,11 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('show'),2300);
 }
 
-/* 사진 수만큼 진행 바 칸을 만들고, 현재 칸은 차오르는 애니메이션으로 표시 */
+/* 현재 목록의 사진 수만큼 진행 바 칸을 만들고, 현재 칸은 차오르는 애니메이션으로 표시 */
 function renderStoryProgress() {
   storyProgress.replaceChildren();
 
-  stories.forEach((_,i) => {
+  currentList.forEach((_,i) => {
     const seg = document.createElement('div');
     seg.className = 'story-seg';
 
@@ -502,27 +505,18 @@ function renderStoryProgress() {
     } else if (i === currentStoryIndex) {
       seg.classList.add('active');
       fill.style.animationDuration = STORY_DURATION + 'ms';
-      fill.addEventListener('animationend',autoNextStory,{once:true});
+      fill.addEventListener('animationend',nextStory,{once:true});
     }
 
     storyProgress.appendChild(seg);
   });
 }
 
-/* 시간이 다 되면 다음 사진으로, 마지막 사진이면 스토리를 닫음 */
-function autoNextStory() {
-  if (!storyViewer.classList.contains('open')) return;
-
-  if (currentStoryIndex < stories.length - 1) {
-    openStory(currentStoryIndex + 1);
-  } else {
-    closeStory();
-  }
-}
-
-function openStory(index) {
-  currentStoryIndex = (index + stories.length) % stories.length;
-  const story = stories[currentStoryIndex];
+/* list: stories(프로필 사진) 또는 highlights(하이라이트) */
+function openStory(index,list = stories) {
+  currentList = list;
+  currentStoryIndex = Math.min(Math.max(index,0),list.length - 1);
+  const story = list[currentStoryIndex];
 
   document.getElementById('storyPhoto').src = story.img;
   document.getElementById('storyTime').textContent = story.time;
@@ -541,18 +535,21 @@ function closeStory() {
     photoViewer.classList.contains('open') ? 'hidden' : '';
 }
 
+/* 다음 사진으로, 마지막 사진이면 닫기 (자동 넘김과 오른쪽 탭 공통) */
 function nextStory() {
-  openStory((currentStoryIndex + 1) % stories.length);
+  if (!storyViewer.classList.contains('open')) return;
+
+  if (currentStoryIndex < currentList.length - 1) {
+    openStory(currentStoryIndex + 1,currentList);
+  } else {
+    closeStory();
+  }
 }
 
+/* 이전 사진으로, 첫 사진이면 처음부터 다시 */
 function prevStory() {
-  openStory((currentStoryIndex - 1 + stories.length) % stories.length);
+  openStory(currentStoryIndex - 1,currentList);
 }
-
-/* 프로필 사진 클릭은 스토리가 아니라 별도 사진 화면을 엽니다. */
-document.getElementById('profilePhotoBtn').addEventListener('click', () => {
-  openStory(0);
-});
 
 function closeProfilePhoto() {
   photoViewer.classList.remove('open');
@@ -561,20 +558,25 @@ function closeProfilePhoto() {
     storyViewer.classList.contains('open') ? 'hidden' : '';
 }
 
+/* 프로필 사진을 누르면 스토리(하나만먹자)가 열립니다. */
+document.getElementById('profilePhotoBtn').addEventListener('click',() => {
+  openStory(0,stories);
+});
+
 document.getElementById('closeProfilePhoto').addEventListener('click',closeProfilePhoto);
 
 photoViewer.addEventListener('click',event => {
   if (event.target === photoViewer) closeProfilePhoto();
 });
 
-/* 하이라이트는 프로필 사진과 독립적으로 스토리를 엽니다. */
+/* New 버튼은 안내 메시지만 보여줍니다. */
 document.getElementById('newStoryBtn').addEventListener('click',() => {
-  openStory(0);
   showToast('새 스토리 업로드는 아직 데모 기능이야.');
 });
 
-document.querySelectorAll('[data-story]').forEach(button => {
-  button.addEventListener('click',() => openStory(Number(button.dataset.story)));
+/* 하이라이트 동그라미를 누르면 하이라이트 사진들이 열립니다. */
+document.querySelectorAll('[data-highlight]').forEach(button => {
+  button.addEventListener('click',() => openStory(Number(button.dataset.highlight),highlights));
 });
 
 document.getElementById('closeStory').addEventListener('click',closeStory);
