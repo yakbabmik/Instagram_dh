@@ -502,9 +502,8 @@ function prevStory() {
 }
 
 /* 프로필 사진 클릭은 스토리가 아니라 별도 사진 화면을 엽니다. */
-document.getElementById('profilePhotoBtn').addEventListener('click',() => {
-  photoViewer.classList.add('open');
-  document.body.style.overflow = 'hidden';
+document.getElementById('profilePhotoBtn').addEventListener('click', () => {
+  openStory(0);
 });
 
 function closeProfilePhoto() {
