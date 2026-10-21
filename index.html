@@ -83,7 +83,6 @@ button{cursor:pointer}
 .caption-body strong{margin-right:6px}
 .comments-list{display:flex;flex-direction:column;gap:16px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
 .comment-item{display:flex;gap:12px;align-items:flex-start}
-.comment-avatar{width:32px;height:32px;border-radius:50%;background:#efefef;color:#8e8e8e;display:grid;place-items:center;font-size:13px;font-weight:650;flex-shrink:0}
 .comment-main{min-width:0;padding-top:5px}
 .comment-name{font-weight:650;margin-right:6px}
 .comment-text{white-space:pre-wrap;overflow-wrap:anywhere}
@@ -226,7 +225,6 @@ body{background:#fff}
 .caption-row .tiny-avatar{display:none}
 .caption-body{padding-top:0}
 .comments-list{gap:12px}
-.comment-avatar{width:28px;height:28px;font-size:12px}
 .comment-main{padding-top:3px}
 .modal-date{order:5;padding:6px 14px 14px}
 .comment-form{order:6;position:sticky;bottom:0;margin-top:auto;background:#fff;padding:6px 14px calc(8px + env(safe-area-inset-bottom))}
@@ -234,12 +232,7 @@ body{background:#fff}
 .story-screen{width:100%;height:100dvh}
 .toast{bottom:calc(66px + env(safe-area-inset-bottom))}
 }
-.comments-list .comment-avatar {
-  display: none !important;
-}  
 </style>
-  
-
 </head>
 <body>
 <main class="app">
@@ -578,10 +571,6 @@ async function loadComments(postId) {
       const item = document.createElement('div');
       item.className = 'comment-item';
 
-      const avatar = document.createElement('div');
-      avatar.className = 'comment-avatar';
-      avatar.textContent = displayName.trim().charAt(0) || '익';
-
       const main = document.createElement('div');
       main.className = 'comment-main';
 
@@ -594,7 +583,7 @@ async function loadComments(postId) {
       body.textContent = comment.body;
 
       main.append(name,body);
-      item.append(avatar,main);
+      item.append(main);
       commentsList.appendChild(item);
     });
   } catch(error) {
