@@ -184,21 +184,25 @@ button{cursor:pointer}
 <button class="action" id="friendBtn" aria-label="비슷한 계정">⌄</button>
 </section>
 
-<!-- 하이라이트: 프로필 사진(스토리)과 별개. 하나만먹자 사진은 포함하지 않음 -->
+<!-- 하이라이트: 프로필 사진(스토리)과 별개 -->
 <section class="stories" aria-label="스토리 하이라이트">
 <button class="story-item add-story" id="newStoryBtn">
 <span class="story-ring new-ring"><span class="plus">＋</span></span>
 <span class="story-label">New</span>
 </button>
 <button class="story-item" data-highlight="0">
+<span class="story-ring"><img src="./하나만먹자.jpg" alt="공놀이"></span>
+<span class="story-label">공놀이</span>
+</button>
+<button class="story-item" data-highlight="1">
 <span class="story-ring"><img src="./브이.jpg" alt="일상"></span>
 <span class="story-label">📷</span>
 </button>
-<button class="story-item" data-highlight="1">
+<button class="story-item" data-highlight="2">
 <span class="story-ring"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=300&q=80" alt="카페"></span>
 <span class="story-label">📷</span>
 </button>
-<button class="story-item" data-highlight="2">
+<button class="story-item" data-highlight="3">
 <span class="story-ring"><img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=300&q=80" alt="일상"></span>
 <span class="story-label">일상</span>
 </button>
@@ -295,13 +299,15 @@ const posts = [
 {img:"https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=85",caption:"오래오래 지금처럼. 🖤",likes:"좋아요 648개",tag:"럽스타그램"}
 ];
 
-/* 스토리: 프로필 사진을 눌렀을 때 나오는 것 (하나만먹자 한 장) */
+/* 스토리: 프로필 사진을 눌렀을 때 나오는 것 (두 장) */
 const stories = [
-{ img: "./하나만먹자.jpg", time: "· 3시간" }
+{ img: "./이걸 보냈더니.webp", time: "· 3시간" },
+{ img: "./이게왔다.webp", time: "· 1시간" }
 ];
 
-/* 하이라이트: 프로필 아래 동그라미를 눌렀을 때 나오는 것 (그 외 사진들) */
+/* 하이라이트: 프로필 아래 동그라미를 눌렀을 때 나오는 것 */
 const highlights = [
+{ img: "./하나만먹자.jpg", time: "· 3시간" },
 { img: "./언제와.webp", time: "· 2시간" },
 { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85", time: "· 8시간" },
 { img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85", time: "· 1일" }
