@@ -157,34 +157,82 @@ button{cursor:pointer}
 .photo-close{position:absolute;top:12px;right:17px;border:0;background:transparent;color:#fff;font-size:36px;font-weight:300;line-height:1}
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;background:#262626;color:white;padding:11px 16px;border-radius:8px;font-size:13px;transition:.25s;pointer-events:none;z-index:100}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+/* 모바일 전용 요소 (데스크톱에서는 숨김) */
+.top-username{display:none}
+.bottom-nav{display:none}
+
 @media(max-width:650px){
-.app{padding:14px 0 40px}
-.topbar{padding:0 16px;margin-bottom:20px}
-.profile{grid-template-columns:100px 1fr;gap:16px;padding:0 16px;margin-bottom:22px;align-items:start}
+body{background:#fff}
+.app{padding:0 0 calc(64px + env(safe-area-inset-bottom))}
+
+/* 상단 바: 뒤로가기 + 사용자 이름 + 알림/더보기 */
+.topbar{padding:8px 12px;margin-bottom:6px;min-height:48px}
+.top-username{display:flex;align-items:center;gap:5px;flex:1;margin-left:6px;font-size:20px;font-weight:700;letter-spacing:-.2px}
+.top-username .verified{width:15px;height:15px;font-size:10px}
+.top-actions{gap:12px}
+
+/* 프로필: 사진 왼쪽, 숫자 오른쪽, 이름은 아래 */
+.profile{grid-template-columns:auto 1fr;grid-template-areas:"avatar stats" "bio bio";gap:12px 18px;padding:4px 16px 0;margin-bottom:14px;align-items:center}
+.profile-info{display:contents}
+.avatar-wrap{grid-area:avatar}
+.heading{display:none}
 .avatar{width:86px;height:86px;padding:3px}
-.heading{gap:7px;margin-bottom:15px}
-.username{font-size:19px}
-.stats{gap:0;justify-content:space-between;margin-bottom:14px}
-.stat{font-size:12px;text-align:center}
-.stat strong{display:block;font-size:15px}
-.bio{font-size:12px}
-.actions{padding:0 12px;grid-template-columns:1fr 1fr 42px;gap:6px;margin-bottom:12px}
-.action{min-height:36px;font-size:13px}
-.stories{gap:18px;padding:12px 12px 22px;margin:0 0 12px}
-.story-item{flex:0 0 80px;width:80px;min-width:80px}
-.story-ring{width:80px;height:80px}
-.tabs{grid-template-columns:1fr 1fr;gap:0;height:48px}
-.tab{padding:0}
-.tab svg{width:26px;height:26px}
-.grid{gap:2px}
-.modal{padding:38px 0 0;align-items:flex-start}
-.modal-card{display:flex;flex-direction:column;width:100%;max-width:480px;height:auto;max-height:94vh;overflow:auto;border-radius:0}
-.modal-image{flex-shrink:0;aspect-ratio:1/1;min-height:0}
+.avatar img{border-width:3px}
+.stats{grid-area:stats;gap:0;justify-content:space-around;margin:0}
+.stat{flex:1;font-size:14px;text-align:center;line-height:1.3}
+.stat strong{display:block;font-size:17px;font-weight:700}
+.bio{grid-area:bio;font-size:14px;line-height:1.45}
+
+/* 버튼: 회색 둥근 버튼 */
+.actions{padding:0 16px;grid-template-columns:1fr 1fr 36px;gap:6px;margin-bottom:14px}
+.action{min-height:32px;border:0;border-radius:8px;background:#efefef;font-size:14px;font-weight:650;color:#111}
+.action.following{background:#efefef}
+
+/* 하이라이트: 작은 동그라미 */
+.stories{gap:14px;padding:2px 16px 14px;margin:0}
+.story-item{flex:0 0 66px;width:66px;min-width:66px}
+.story-ring{width:66px;height:66px;padding:3px;margin-bottom:6px}
+.story-ring img{border-width:2px}
+.add-story .plus{font-size:34px}
+.story-label{font-size:12px}
+
+.tabs{grid-template-columns:1fr 1fr;gap:0;height:44px;margin-bottom:1px}
+.tab svg{width:24px;height:24px}
+.grid{gap:1px}
+.post .overlay{display:none}
+.pin-badge{top:6px;right:6px;width:19px;height:19px}
+.multi-badge{top:6px;right:6px;width:18px;height:18px}
+
+/* 하단 메뉴 바 */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:space-around;align-items:center;height:calc(50px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid #efefef}
+.bottom-nav button{flex:1;height:50px;border:0;background:transparent;color:#111;display:grid;place-items:center;padding:0}
+.bottom-nav svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bottom-nav .nav-avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid #111;padding:1px;background:#fff}
+
+/* 게시물 상세: 인스타그램 앱처럼 위에서 아래로 */
+.modal{padding:0;align-items:stretch;background:#fff}
+.modal::before{content:"게시물";position:fixed;top:0;left:0;right:0;height:48px;display:grid;place-items:center;background:#fff;border-bottom:1px solid #efefef;font-size:16px;font-weight:700;z-index:11}
+.close{top:0;left:0;right:auto;z-index:12;width:48px;height:48px;display:grid;place-items:center;font-size:0;color:#111;background:transparent}
+.close::before{content:"‹";font-size:36px;line-height:1;font-weight:300;transform:translateY(-2px)}
+.modal-card{display:flex;flex-direction:column;width:100%;max-width:none;height:100dvh;max-height:none;padding-top:48px;overflow-y:auto;overflow-x:hidden;border-radius:0;-webkit-overflow-scrolling:touch}
+.modal-side{display:contents}
+.modal-head{order:0;padding:10px 12px;border-bottom:0;font-size:14px}
+.modal-image{order:1;flex-shrink:0;width:100%;aspect-ratio:4/5;min-height:0}
 .modal-image img{width:100%;height:100%;max-height:none;object-fit:cover}
-.modal-side{overflow:visible;border-left:0}
-.modal-scroll{flex:none;overflow:visible}
-.close{top:2px;right:12px}
+.modal-actions{order:2;border-top:0;padding:4px 12px 0}
+.modal-likes{order:3;padding:2px 14px 0}
+.modal-scroll{order:4;flex:none;overflow:visible;padding:6px 14px 0}
+.caption-row{margin-bottom:10px}
+.caption-row .tiny-avatar{display:none}
+.caption-body{padding-top:0}
+.comments-list{gap:12px}
+.comment-avatar{width:28px;height:28px;font-size:12px}
+.comment-main{padding-top:3px}
+.modal-date{order:5;padding:6px 14px 14px}
+.comment-form{order:6;position:sticky;bottom:0;margin-top:auto;background:#fff;padding:6px 14px calc(8px + env(safe-area-inset-bottom))}
+
 .story-screen{width:100%;height:100dvh}
+.toast{bottom:calc(66px + env(safe-area-inset-bottom))}
 }
 </style>
 </head>
@@ -194,6 +242,8 @@ button{cursor:pointer}
 <button class="back" id="backBtn" aria-label="뒤로">
 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3 6 12l9 9"/></svg>
 </button>
+<!-- 모바일 전용: 상단 사용자 이름 (PC에서는 CSS로 숨김) -->
+<div class="top-username">ybab.mik <span class="verified">✓</span></div>
 <div class="top-actions">
 <button class="more" id="bellBtn" aria-label="알림">
 <svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4M12 3V1"/></svg>
@@ -265,6 +315,25 @@ button{cursor:pointer}
 
 <section class="grid" id="postGrid" aria-label="게시물 9개"></section>
 </main>
+
+<!-- 모바일 전용: 하단 메뉴 바 (PC에서는 CSS로 숨김) -->
+<nav class="bottom-nav" aria-label="하단 메뉴">
+<button aria-label="홈">
+<svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg>
+</button>
+<button aria-label="검색">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+</button>
+<button aria-label="만들기">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>
+</button>
+<button aria-label="릴스">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M3 9h18M9 3l3 6M15 3l3 6"/><path d="m10 13 5 3-5 3z"/></svg>
+</button>
+<button aria-label="프로필">
+<img class="nav-avatar" src="./브이.jpg" alt="">
+</button>
+</nav>
 
 <div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="게시물 상세">
 <button class="close" id="closeModal" aria-label="닫기">×</button>
@@ -869,6 +938,11 @@ document.querySelectorAll('[data-toast]').forEach(button => {
     showToast(button.dataset.toast);
     document.getElementById('menuPop').classList.remove('show');
   });
+});
+
+/* 모바일 하단 메뉴 버튼 */
+document.querySelectorAll('.bottom-nav button').forEach(btn => {
+  btn.addEventListener('click',() => showToast('데모 화면입니다.'));
 });
 
 const postsTab = document.getElementById('postsTab');
