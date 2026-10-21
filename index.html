@@ -301,16 +301,31 @@ const posts = [
 
 /* 스토리: 프로필 사진을 눌렀을 때 나오는 것 (두 장) */
 const stories = [
-{ img: "./이걸보냈더니.webp", time: "· 3시간" },
+{ img: "./이걸 보냈더니.webp", time: "· 3시간" },
 { img: "./이게왔다.webp", time: "· 1시간" }
 ];
 
 /* 하이라이트: 프로필 아래 동그라미를 눌렀을 때 나오는 것 */
+/* 동그라미 하나가 사진 묶음 하나입니다. (순서 = 동그라미 순서) */
 const highlights = [
-{ img: "./하나만먹자.jpg", time: "· 3시간" },
-{ img: "./언제와.webp", time: "· 2시간" },
-{ img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85", time: "· 8시간" },
-{ img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85", time: "· 1일" }
+  /* 0: 공놀이 */
+  [
+    { img: "./하나만먹자.jpg", time: "· 3시간" }
+  ],
+  /* 1: 두 번째 하이라이트 */
+  [
+    { img: "./먹을까.webp", time: "· 4시간" },
+    { img: "./학교안갈래.webp", time: "· 3시간" },
+    { img: "./집가자.webp", time: "· 2시간" }
+  ],
+  /* 2: 카페 */
+  [
+    { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85", time: "· 8시간" }
+  ],
+  /* 3: 일상 */
+  [
+    { img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=900&q=85", time: "· 1일" }
+  ]
 ];
 
 const grid = document.getElementById('postGrid');
@@ -582,7 +597,7 @@ document.getElementById('newStoryBtn').addEventListener('click',() => {
 
 /* 하이라이트 동그라미를 누르면 하이라이트 사진들이 열립니다. */
 document.querySelectorAll('[data-highlight]').forEach(button => {
-  button.addEventListener('click',() => openStory(Number(button.dataset.highlight),highlights));
+  button.addEventListener('click',() => openStory(0,highlights[Number(button.dataset.highlight)]));
 });
 
 document.getElementById('closeStory').addEventListener('click',closeStory);
